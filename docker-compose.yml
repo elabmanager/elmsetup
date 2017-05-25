@@ -1,0 +1,70 @@
+ version: '3'
+services:
+    nginx_proxy:
+        image: elabmanager/test:elmnginx
+        depends_on:
+            - "api"
+        networks:
+            - elmnet
+        ports:
+            - "80:80"
+    api:
+        image:
+            elabmanager/test:elmapp
+        depends_on:
+            - "elmdbservice"
+            - "tikaservice"
+            - "elasticservice"
+        deploy:
+            restart_policy:
+                condition: any
+                delay: 5s
+                max_attempts: 3
+                window: 120s
+        #ports:
+        #    - "5000:5000"
+        networks:
+            - elmnet
+        volumes:
+            - elmuserdata:/var/elm
+    elmdbservice:
+        image:
+            elabmanager/test:elmdb
+        #ports:
+        #   - "5432:5432"
+        environment:
+            - POSTGRES_PASSWORD=abc
+        networks:
+            - elmnet
+        volumes:
+            - elmdb:/var/lib/postgresql/data
+    tikaservice:
+        image:
+            elabmanager/test:elmtika
+        networks:
+            - elmnet
+       # ports:
+       #     - "9998:9998"
+    elasticservice:
+        image:
+            elasticsearch:5.4.0-alpine
+        networks:
+            - elmnet
+        #ports:
+        #    - "9200:9200"
+        environment:
+            - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
+        volumes:
+            - elmsearchdata:/usr/share/elasticsearch/data
+networks:
+    elmnet:
+        driver: bridge
+
+volumes:
+    elmdb:
+        external: true
+    elmsearchdata:
+        external: true
+    elmuserdata:
+        external: true
+
