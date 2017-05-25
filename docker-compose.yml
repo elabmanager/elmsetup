@@ -1,4 +1,5 @@
- version: '3'
+
+version: '3'
 services:
     nginx_proxy:
         image: elabmanager/test:elmnginx
