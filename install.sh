@@ -1,4 +1,5 @@
 mkdir /var/elm
+wget -O docker-compose.yml https://raw.githubusercontent.com/elabmanager/elmsetup/master/docker-compose.yml
 cp docker-compose.yml /var/elm/docker-compose.yml
 mkdir /var/elm/userdata
 mkdir /var/elm/db
