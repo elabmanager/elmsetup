@@ -8,4 +8,4 @@ docker volume create --name elmuserdata --opt o=bind --opt device=/var/elm/userd
 docker volume create --name elmdb --opt o=bind --opt device=/var/elm/db
 docker volume create --name elmsearchdata --opt o=bind --opt device=/var/elm/searchdata
 cd /var/elm
-docker-compose up
+docker-compose up -d
