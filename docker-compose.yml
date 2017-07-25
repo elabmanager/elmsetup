@@ -2,7 +2,7 @@
 version: '3'
 services:
     nginx_proxy:
-        image: elabmanager/test:elmnginx
+        image: elabmanager/elmproxyserver:v1_0_0_0
         depends_on:
             - "api"
         networks:
@@ -11,7 +11,7 @@ services:
             - "80:80"
     api:
         image:
-            elabmanager/test:elmapp
+            elabmanager/serverapp:v1_0_0_0
         depends_on:
             - "elmdbservice"
             - "tikaservice"
@@ -30,7 +30,7 @@ services:
             - elmuserdata:/var/elm
     elmdbservice:
         image:
-            elabmanager/test:elmdb
+            elabmanager/elm_db:v1_0_0_0
         #ports:
         #   - "5432:5432"
         environment:
@@ -41,7 +41,7 @@ services:
             - elmdb:/var/lib/postgresql/data
     tikaservice:
         image:
-            elabmanager/test:elmtika
+            elabmanager/elmtextextract:v1_0_0_0
         networks:
             - elmnet
        # ports:
